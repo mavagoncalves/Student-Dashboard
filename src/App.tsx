@@ -1,18 +1,17 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import './App.css'
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import Login from './features/auth/Login';
 
 function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={
-          <div className="flex h-screen items-center justify-center bg-gray-50">
-            <h1 className="text-3xl font-bold text-blue-600">App is working!</h1>
-          </div>
-        } />
+        {/* Rendering Login page at root URL */}
+        <Route path="/" element={<Login />} />
+
+        <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </BrowserRouter>
   );
 }
 
-export default App
+export default App;
