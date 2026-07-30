@@ -11,19 +11,19 @@ export default function Sidebar() {
   ];
 
   return (
-    <aside className="w-72 bg-[#A8C9D8] flex flex-col justify-between min-h-screen p-10 border-r border-gray-300">
+    <aside className="flex items-center w-72 bg-[#A8C9D8] flex-col justify-between min-h-screen p-10 border-r border-gray-300">
       <div className="space-y-12">
         {/* BRAND*/}
         <Link to="/dashboard" className="inline-block">
-          <h1 className="text-3xl font-extrabold text-blue-900 border-b-4 border-blue-900 leading-tight">
-            MPCircle.
+          <h1 className="text-3xl font-extrabold text-blue-900 border-b-4 leading-tight">
+            LearnGround
           </h1>
         </Link>
 
         {/* PROFILE AVATAR*/}
-        <div className="w-32 h-44 rounded-[40px] border-4 border-gray-200 overflow-hidden shadow-inner">
+        <div className="ml-4 w-42 h-42 rounded-[80px] border-4 border-gray-200 overflow-hidden shadow-inner">
           <img
-            src="https://randomuser.me/api/portraits/women/44.jpg"
+            src="https://randomuser.me/api/portraits/women/82.jpg"
             alt="Profile Avatar"
             className="w-full h-full object-cover"
           />
