@@ -48,3 +48,42 @@ export const fetchDashboardData = async (): Promise<DashboardData> => {
     };
   }
 };
+ 
+// COURSE DETAIL FETCHING
+export interface CourseDetail {
+  id: number;
+  title: string;
+  lecturer: string;
+  progress: number;
+  status: 'Not Started' | 'In Progress' | 'Completed';
+  iconColor: string;
+}
+
+export const fetchCoursesList = async (): Promise<CourseDetail[]> => {
+  try {
+    const res = await fetch('https://dummyjson.com/users?limit=12');
+    const data = await res.json();
+    
+    const courseColors = ['bg-[#B3E2AF]', 'bg-blue-300', 'bg-gray-300', 'bg-pink-200', 'bg-purple-200'];
+    
+    return data.users.map((user: any, index: number) => {
+      const progressVal = Math.min(100, Math.floor(user.weight)); 
+      
+      let currentStatus: 'Not Started' | 'In Progress' | 'Completed' = 'In Progress';
+      if (progressVal === 0) currentStatus = 'Not Started';
+      if (progressVal >= 90) currentStatus = 'Completed';
+
+      return {
+        id: user.id,
+        title: user.company.department,
+        lecturer: `${user.firstName} ${user.lastName}`,
+        progress: progressVal,
+        status: currentStatus,
+        iconColor: courseColors[index % courseColors.length],
+      };
+    });
+  } catch (error) {
+    console.error("Failed to fetch courses:", error);
+    return [];
+  }
+};
