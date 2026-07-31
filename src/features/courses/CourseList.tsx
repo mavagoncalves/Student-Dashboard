@@ -1,6 +1,10 @@
 import { useState, useEffect } from 'react';
-import { BookOpen } from 'lucide-react';
+import { BookOpen, Monitor, Database, Cpu, Layout, Globe, Briefcase, PenTool, LineChart, Microscope } from 'lucide-react';
 import { fetchCoursesList, type CourseDetail } from '../../services/api';
+
+const IconMap: Record<string, any> = {
+  BookOpen, Monitor, Database, Cpu, Layout, Globe, Briefcase, PenTool, LineChart, Microscope
+};
 
 export default function Courses() {
   const [courses, setCourses] = useState<CourseDetail[]>([]);
@@ -31,13 +35,13 @@ export default function Courses() {
     <div className="space-y-8">
       <h1 className="text-2xl md:text-4xl font-extrabold text-gray-900">All Courses</h1>
       
-      {/* 
-        Grid setup: 2 columns on mobile, 3 on tablet, 4 on desktop. 
-        When a card expands, it takes up 2 columns.
-      */}
+        {/*Grid setup: 2 columns on mobile, 3 on tablet, 4 on desktop. When a card expands, it takes up 2 columns.*/}
+
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
         {courses.map((course) => {
           const isExpanded = expandedId === course.id;
+          
+          const IconComponent = IconMap[course.iconName] || BookOpen;
           
           return (
             <div 
@@ -55,7 +59,7 @@ export default function Courses() {
                   ? 'w-16 h-16 rounded-2xl' 
                   : 'w-16 h-16 md:w-20 md:h-20 rounded-full'
               }`}>
-                <BookOpen className={`${isExpanded ? 'w-8 h-8' : 'w-8 h-8 md:w-10 md:h-10'} text-white`} />
+                <IconComponent className={`${isExpanded ? 'w-8 h-8' : 'w-8 h-8 md:w-10 md:h-10'} text-white`} />
               </div>
 
               {/* Dynamic Content */}
