@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 /* MAIN COLORS */
-@theme {
+:root {
   --color-sidebar: #A8C9D8;
   --color-background: #FCFBF3;
   --color-footer: #D6DBDF;

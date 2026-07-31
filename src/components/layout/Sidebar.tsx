@@ -11,56 +11,62 @@ export default function Sidebar() {
   ];
 
   return (
-    // Added 'h-auto' here for mobile so it doesn't take over the screen
-    <aside className="w-full md:w-72 bg-[#A8C9D8] flex flex-row md:flex-col justify-between items-center md:items-stretch h-auto md:min-h-screen p-4 md:p-10 border-b md:border-b-0 md:border-r border-gray-300 sticky top-0 z-50">
+    <aside className=" sticky top-0 z-50 w-full md:w-72 shrink-0 bg-[#A8C9D8] flex flex-row md:flex-col justify-between items-center md:items-stretch h-auto md:h-screen p-4 md:p-8 border-b md:border-b-0 md:border-r border-gray-300 md:sticky top-0 z-50">
       
-      {/* BRAND */}
-      <div className="flex flex-col items-center md:items-start gap-4 md:gap-12">
-        <Link to="/dashboard" className="inline-block">
-          <h1 className="text-2xl md:text-3xl font-extrabold text-blue-900 md:border-b-4 md:border-blue-900 leading-tight">
-            LearnGround
-          </h1>
-        </Link>
-
-        {/* PROFILE PICTURE */}
-        <div className="ml-4 hidden md:block w-40 h-40 rounded-[80px] border-4 border-gray-200 overflow-hidden shadow-inner">
-          <img
-            src="https://randomuser.me/api/portraits/women/63.jpg"
-            alt="Profile Avatar"
-            className="w-full h-full object-cover"
-          />
+      {/* TOP GROUP: Brand, Profile, and Nav */}
+      <div className="flex flex-row md:flex-col items-center md:items-stretch gap-4 md:gap-8 flex-1 min-w-0">
+        
+        {/* BRAND */}
+        <div className="flex-shrink-0 flex justify-center md:justify-start">
+          <Link to="/dashboard" className="inline-block">
+            <h1 className="text-xl md:text-3xl font-extrabold text-blue-900 md:border-b-4 md:border-blue-900 leading-tight">
+              LearnGround
+            </h1>
+          </Link>
         </div>
+
+        {/* PROFILE PICTURE & NAME */}
+        <div className="hidden md:flex flex-col items-center gap-3">
+          <div className="w-32 h-32 rounded-full border-4 border-gray-200 overflow-hidden shadow-inner">
+            <img
+              src="https://randomuser.me/api/portraits/women/63.jpg"
+              alt="Profile Avatar"
+              className="w-full h-full object-cover"
+            />
+          </div>
+          <h2 className="text-xl font-bold text-gray-900 text-center">Maria</h2>
+        </div>
+
+        {/* NAVIGATION */}
+        <nav className="flex flex-row md:flex-col gap-2 flex-1 md:flex-none justify-start overflow-x-auto no-scrollbar w-full">
+          {navItems.map((item) => {
+            const Icon = item.icon;
+            const isActive = location.pathname === item.path;
+            return (
+              <Link
+                key={item.name}
+                to={item.path}
+                title={item.name} 
+                className={`flex items-center justify-center md:justify-start gap-0 md:gap-4 p-2.5 md:px-4 md:py-3.5 rounded-xl md:rounded-2xl text-lg font-semibold transition-colors shrink-0 ${
+                  isActive
+                    ? 'bg-blue-100 text-blue-900'
+                    : 'text-gray-800 hover:bg-white/20 hover:text-gray-950'
+                }`}
+              >
+                <Icon size={24} />
+                <span className="hidden md:inline-block">{item.name}</span>
+              </Link>
+            );
+          })}
+        </nav>
       </div>
 
-      {/* NAVIGATION */}
-      <nav className="flex flex-row md:flex-col gap-2 md:space-y-2 flex-1 md:flex-none justify-center md:justify-start px-2 md:px-0 md:pt-10 overflow-x-auto no-scrollbar">
-        {navItems.map((item) => {
-          const Icon = item.icon;
-          const isActive = location.pathname === item.path;
-          return (
-            <Link
-              key={item.name}
-              to={item.path}
-              title={item.name} 
-              className={`flex items-center justify-center md:justify-start gap-0 md:gap-4 p-3 md:px-4 md:py-3.5 rounded-xl md:rounded-2xl text-lg font-semibold transition-colors shrink-0 ${
-                isActive
-                  ? 'bg-blue-100 text-blue-900'
-                  : 'text-gray-800 hover:bg-white/20 hover:text-gray-950'
-              }`}
-            >
-              <Icon size={24} />
-              <span className="hidden md:inline-block">{item.name}</span>
-            </Link>
-          );
-        })}
-      </nav>
-
       {/* SIGN OUT BUTTON */}
-      <div className="md:border-t md:border-gray-200 md:pt-6">
+      <div className="ml-2 md:ml-0 md:mt-auto md:border-t md:border-gray-200 md:pt-6 flex-shrink-0">
         <Link
           to="/"
           title="Sign Out"
-          className="flex items-center justify-center md:justify-start gap-0 md:gap-3.5 p-3 md:px-4 md:py-3 rounded-xl md:rounded-2xl text-lg font-semibold text-gray-800 hover:bg-red-100 hover:text-red-700 transition-colors shrink-0"
+          className="flex items-center justify-center md:justify-start gap-0 md:gap-3.5 p-2.5 md:px-4 md:py-3 rounded-xl md:rounded-2xl text-lg font-semibold text-gray-800 hover:bg-red-100 hover:text-red-700 transition-colors shrink-0"
         >
           <LogOut size={24} />
           <span className="hidden md:inline-block">Sign Out</span>

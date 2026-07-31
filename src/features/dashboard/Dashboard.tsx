@@ -1,7 +1,12 @@
 import { useState, useEffect } from 'react';
-import { GraduationCap} from 'lucide-react';
+import { BookOpen, Monitor, Database, Cpu, Layout, Globe, Briefcase, PenTool, LineChart, Microscope } from 'lucide-react';
 import { fetchDashboardData, type DashboardData } from '../../services/api';
 import Statistics from '../../components/ui/StatsCard';
+
+const IconMap: Record<string, any> = {
+  BookOpen, Monitor, Database, Cpu, Layout, 
+  Globe, Briefcase, PenTool, LineChart, Microscope
+};
 
 export default function Dashboard() {
   const [data, setData] = useState<DashboardData | null>(null);
@@ -44,20 +49,24 @@ export default function Dashboard() {
 
       {/* COURSES*/}
       <section>
-        <h2 className="text-xl md:text-2xl font-bold text-gray-800 mb-6 md:mb-8">Your Courses</h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-8">
+        <h2 className="text-xl md:text-2xl font-bold text-gray-800 mb-6 md:mb-8">Pinned Courses</h2>
+        
+        <div className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-4 md:gap-6">
           
-          {data.courses.map((course) => (
-            <div key={course.id} className="bg-white p-6 md:p-8 rounded-3xl shadow-sm border border-gray-100 flex flex-col items-center justify-center space-y-4 md:space-y-6">
-              <div className={`${course.iconColor} w-20 h-20 md:w-28 md:h-28 rounded-full flex items-center justify-center shadow-inner`}>
-                <GraduationCap className="w-10 h-10 md:w-14 md:h-14 text-white" />
+          {data.courses.map((course) => {
+            const IconComponent = IconMap[course.iconName] || BookOpen;
+            
+            return (
+              <div key={course.id} className="bg-white p-6 md:p-8 rounded-3xl shadow-sm border border-gray-100 flex flex-col items-center justify-center space-y-4 md:space-y-6">
+                <div className={`${course.iconColor} w-16 h-16 md:w-24 md:h-24 rounded-full flex items-center justify-center shadow-inner`}>
+                  <IconComponent className="w-8 h-8 md:w-12 md:h-12 text-white" />
+                </div>
+                <button className="bg-[#D6DBDF] px-3 md:px-6 py-1.5 md:py-2 rounded-lg font-semibold text-gray-800 hover:bg-gray-400 transition-colors text-xs md:text-sm w-full truncate pointer-events-none">
+                  {course.title}
+                </button>
               </div>
-              <button className="bg-[#D6DBDF] px-4 md:px-6 py-2 rounded-lg font-semibold text-gray-800 hover:bg-gray-400 transition-colors text-sm w-full md:w-auto truncate max-w-full">
-                {course.title}
-              </button>
-            </div>
-          ))}
-          
+            );
+          })}
         </div>
       </section>
 
