@@ -7,7 +7,7 @@ interface StatsProps {
 
 export default function Statistics({ attendanceRate, gpa }: StatsProps) {
   return (
-    <section className="grid grid-cols-1 lg:grid-cols-2 gap-4 md:gap-8 pt-4 md:pt-8">
+    <section className="grid grid-cols-1 xl:grid-cols-2 gap-4 md:gap-8 pt-4 md:pt-8">
       {/* ATTENDANCE RATE CARD */}
       <div className="bg-[#D6DBDF] p-6 md:p-8 rounded-3xl md:rounded-[40px] flex flex-col justify-between gap-6 shadow-sm border border-gray-200">
         <div className="flex items-center justify-between">
