@@ -1,6 +1,6 @@
 <div align="center">
   <br />
-  <img src="/src/assts/Logo.png" width="80" height="80" style="border-radius: 24px;" alt="LearnGround logo" />
+  <img src="/src/assets/Logo.png" width="80" height="80" style="border-radius: 24px;" alt="LearnGround logo" />
   
   <h1 style="font-size: 3rem; font-weight: 900; margin-top: 16px; background: linear-gradient(to right, rgba(200, 214, 217, 1), #589fecff); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
     LearnGround
