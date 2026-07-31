@@ -25,8 +25,8 @@ const InstagramIcon = () => (
 
 export default function Footer() {
   return (
-    <footer className="bg-[#D6DBDF] border-t border-gray-300 px-8 py-5 flex items-center justify-between text-gray-700">
-      <div className="flex items-center gap-10">
+    <footer className="bg-[#D6DBDF] border-t border-gray-300 px-6 py-6 sm:px-8 sm:py-5 flex flex-col sm:flex-row items-center justify-between gap-4 text-gray-700 text-center sm:text-left">
+      <div className="flex flex-col sm:flex-row items-center gap-4 sm:gap-10">
         <h3 className="text-xl font-semibold">LearnGround</h3>
 
         <div className="flex gap-5">
