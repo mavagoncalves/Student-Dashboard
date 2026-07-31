@@ -15,8 +15,9 @@ export interface DashboardData {
   stats: StudentStats;
 }
 
-// Helper array for cycling colors on course cards
+// Helper array for cycling colors and iconson course cards
 const courseColors = ['bg-[#B3E2AF]', 'bg-blue-300', 'bg-gray-300', 'bg-gray-300', 'bg-pink-200', 'bg-purple-200'];
+const availableIcons = ['BookOpen', 'Monitor', 'Database', 'Cpu', 'Layout', 'Globe', 'Briefcase', 'PenTool', 'LineChart', 'Microscope'];
 
 // Fetching
 export const fetchDashboardData = async (): Promise<DashboardData> => {
@@ -57,14 +58,13 @@ export interface CourseDetail {
   progress: number;
   status: 'Not Started' | 'In Progress' | 'Completed';
   iconColor: string;
+  iconName: string;
 }
 
 export const fetchCoursesList = async (): Promise<CourseDetail[]> => {
   try {
     const res = await fetch('https://dummyjson.com/users?limit=12');
     const data = await res.json();
-    
-    const courseColors = ['bg-[#B3E2AF]', 'bg-blue-300', 'bg-gray-300', 'bg-pink-200', 'bg-purple-200'];
     
     return data.users.map((user: any, index: number) => {
       const progressVal = Math.min(100, Math.floor(user.weight)); 
@@ -73,6 +73,8 @@ export const fetchCoursesList = async (): Promise<CourseDetail[]> => {
       if (progressVal === 0) currentStatus = 'Not Started';
       if (progressVal >= 90) currentStatus = 'Completed';
 
+      const randomIcon = availableIcons[Math.floor(Math.random() * availableIcons.length)];
+
       return {
         id: user.id,
         title: user.company.department,
@@ -80,6 +82,7 @@ export const fetchCoursesList = async (): Promise<CourseDetail[]> => {
         progress: progressVal,
         status: currentStatus,
         iconColor: courseColors[index % courseColors.length],
+        iconName: randomIcon,
       };
     });
   } catch (error) {
