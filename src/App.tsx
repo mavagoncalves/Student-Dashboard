@@ -8,23 +8,52 @@ import Assignments from './features/assignments/AssignmentPage';
 
 const queryClient = new QueryClient();
 
+// Guard to protect internal pages (redirects to Login if no token)
+const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
+  const isAuthenticated = localStorage.getItem('learnGround_auth') === 'true';
+  return isAuthenticated ? <>{children}</> : <Navigate to="/" replace />;
+};
+
+// Guard to protect the login page (redirects to Dashboard if already logged in)
+const PublicRoute = ({ children }: { children: React.ReactNode }) => {
+  const isAuthenticated = localStorage.getItem('learnGround_auth') === 'true';
+  return isAuthenticated ? <Navigate to="/dashboard" replace /> : <>{children}</>;
+};
+
 export default function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <BrowserRouter>
         <Routes>
-        <Route path="/" element={<Login />} />
-        
-        <Route element={<MainLayout />}>
-          <Route index element={<Navigate to="/dashboard" replace />} />
-          <Route path="dashboard" element={<Dashboard />} />
-          <Route path="courses" element={<Courses />} />
-          <Route path="assignments" element={<Assignments />} />
-        </Route>
+          
+          {/* PUBLIC ROUTE */}
+          <Route 
+            path="/" 
+            element={
+              <PublicRoute>
+                <Login />
+              </PublicRoute>
+            } 
+          />
+          
+          {/* PROTECTED ROUTES */}
+          <Route 
+            element={
+              <ProtectedRoute>
+                <MainLayout />
+              </ProtectedRoute>
+            }
+          >
+            <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/courses" element={<Courses />} />
+            <Route path="/assignments" element={<Assignments />} />
+          </Route>
 
-        <Route path="*" element={<Navigate to="/" replace />} />
-      </Routes>
-    </BrowserRouter>
-  </QueryClientProvider>
+          {/* CATCH-ALL ROUTE (Handles 404s sending users back to the root) */}
+          <Route path="*" element={<Navigate to="/" replace />} />
+          
+        </Routes>
+      </BrowserRouter>
+    </QueryClientProvider>
   );
 }
