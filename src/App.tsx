@@ -2,6 +2,7 @@ import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import Login from './features/auth/Login';
 import MainLayout from './components/layout/MainLayout';
 import Dashboard from './features/dashboard/Dashboard';
+import Courses from './features/courses/CourseList';
 
 export default function App() {
   return (
@@ -10,8 +11,9 @@ export default function App() {
         <Route path="/" element={<Login />} />
         
         <Route element={<MainLayout />}>
-          <Route path="/dashboard" element={<Dashboard />} />
-          {/* Add blank paths for courses/assignments later */}
+          <Route index element={<Navigate to="/dashboard" replace />} />
+          <Route path="dashboard" element={<Dashboard />} />
+          <Route path="courses" element={<Courses />} />
         </Route>
 
         <Route path="*" element={<Navigate to="/" replace />} />
