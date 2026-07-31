@@ -88,3 +88,43 @@ export const fetchCoursesList = async (): Promise<CourseDetail[]> => {
     return [];
   }
 };
+
+
+// ASSIGNMENTS PAGE DATA
+export interface Assignment {
+  id: number;
+  title: string;
+  status: 'To Do' | 'In Progress' | 'Completed';
+  dueDate: string;
+  priority: 'High' | 'Medium' | 'Low';
+}
+
+export const fetchAssignments = async (): Promise<Assignment[]> => {
+  try {
+    const res = await fetch('https://dummyjson.com/todos?limit=12');
+    const data = await res.json();
+    
+    const priorities: ('High' | 'Medium' | 'Low')[] = ['High', 'Medium', 'Low'];
+    
+    return data.todos.map((todo: any, index: number) => {
+      const date = new Date();
+      date.setDate(date.getDate() + index);
+      
+      // Distribute statuses across the 3 columns for demo
+      let currentStatus: 'To Do' | 'In Progress' | 'Completed' = 'To Do';
+      if (index > 3 && index <= 7) currentStatus = 'In Progress';
+      if (index > 7) currentStatus = 'Completed';
+      
+      return {
+        id: todo.id,
+        title: todo.todo,
+        status: currentStatus,
+        dueDate: date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' }),
+        priority: priorities[index % 3]
+      };
+    });
+  } catch (error) {
+    console.error("Failed to fetch assignments:", error);
+    return [];
+  }
+};
