@@ -54,10 +54,10 @@ export default function Courses() {
               }`}
             >
               {/* Icon / Avatar - Adapts shape when expanded */}
-              <div className={`${course.iconColor} transition-all duration-300 flex items-center justify-center shadow-inner flex-shrink-0 ${
+              <div className={`${course.iconColor} rounded-full transition-all duration-300 flex items-center justify-center shadow-inner flex-shrink-0 ${
                 isExpanded 
                   ? 'w-16 h-16 rounded-2xl' 
-                  : 'w-16 h-16 md:w-20 md:h-20 rounded-full'
+                  : 'w-16 h-16 md:w-20 md:h-20'
               }`}>
                 <IconComponent className={`${isExpanded ? 'w-8 h-8' : 'w-8 h-8 md:w-10 md:h-10'} text-white`} />
               </div>
