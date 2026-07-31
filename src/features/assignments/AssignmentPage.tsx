@@ -46,7 +46,7 @@ export default function Assignments() {
     <div className="space-y-8">
       <h1 className="text-2xl md:text-4xl font-extrabold text-gray-900">Assignments</h1>
       
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 xl:grid-cols-3 gap-6">
         {columns.map((column) => (
           <div key={column.status} className="bg-gray-50/50 rounded-3xl p-6 border border-gray-100 flex flex-col min-h-[600px]">
             
@@ -72,10 +72,10 @@ export default function Assignments() {
                   </div>
 
                   {/* TASK FOOTER + ACTION BUTTONS */}
-                  <div className="flex items-center justify-between mt-auto pt-4 border-t border-gray-50">
-                    <span className="text-xs font-semibold text-gray-500">Due {task.dueDate}</span>
-                    
-                    <div className="flex gap-3">
+                  <div className="flex items-center justify-between mt-auto pt-4 border-t border-gray-50 flex-wrap gap-2">
+                    <span className="text-xs font-semibold text-gray-500 whitespace-nowrap">Due {task.dueDate}</span>
+  
+                    <div className="flex gap-3 shrink-0">
                       {task.status === 'To Do' && (
                         <button 
                           onClick={() => moveAssignment(task.id, 'In Progress')} 
