@@ -26,8 +26,13 @@ export default function Login() {
     },
     onSuccess: (data) => {
       console.log('Login successful:', data);
-      // Save a dummy auth token to local storage so the app knows we are logged in
+      
+      // Save the auth token and dynamic username to local storage
       localStorage.setItem('learnGround_auth', 'true');
+      
+      const inferredName = data.email.split('@')[0];
+      const formattedName = inferredName.charAt(0).toUpperCase() + inferredName.slice(1);
+      localStorage.setItem('learnGround_userName', formattedName);
       
       // Send the user to the dashboard
       navigate('/dashboard');
@@ -36,6 +41,7 @@ export default function Login() {
       console.error('Login failed:', error);
     }
   });
+
 
   const onSubmit = (data: LoginFormValues) => {
     loginMutation.mutate(data);

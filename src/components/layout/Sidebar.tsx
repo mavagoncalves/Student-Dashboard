@@ -4,6 +4,7 @@ import { LayoutDashboard, BookOpen, FileCheck, LogOut } from 'lucide-react';
 export default function Sidebar() {
   const location = useLocation();
   const navigate = useNavigate();
+  const userName = localStorage.getItem('learnGround_userName') || 'Student';
 
   const navItems = [
     { name: 'Dashboard', path: '/dashboard', icon: LayoutDashboard },
@@ -18,9 +19,9 @@ export default function Sidebar() {
       <div className="flex flex-row md:flex-col items-center md:items-stretch gap-4 md:gap-8 flex-1 min-w-0">
         
         {/* BRAND */}
-        <div className="flex-shrink-0 flex justify-center md:justify-start">
+        <div className="flex-shrink-0 flex justify-center ">
           <Link to="/dashboard" className="inline-block">
-            <h1 className="text-xl md:text-3xl font-extrabold text-blue-900 md:border-b-4 md:border-blue-900 leading-tight">
+            <h1 className="text-xl md:text-3xl font-extrabold text-blue-950 md:border-b-4 md:border-blue-940 leading-tight">
               LearnGround
             </h1>
           </Link>
@@ -35,7 +36,7 @@ export default function Sidebar() {
               className="w-full h-full object-cover"
             />
           </div>
-          <h2 className="text-xl font-bold text-gray-900 text-center">Maria</h2>
+          <h2 className="text-xl font-bold text-gray-900 text-center">{userName}</h2>
         </div>
 
         {/* NAVIGATION */}
