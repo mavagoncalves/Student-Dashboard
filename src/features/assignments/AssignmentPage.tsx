@@ -1,26 +1,33 @@
-import { useState, useEffect } from 'react';
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { fetchAssignments, type Assignment } from '../../services/api';
 
 export default function Assignments() {
-  const [assignments, setAssignments] = useState<Assignment[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
+  const queryClient = useQueryClient();
 
-  useEffect(() => {
-    const loadData = async () => {
+  const { data: assignments = [], isLoading } = useQuery({
+    queryKey: ['assignments'],
+    queryFn: async () => {
+      const savedData = localStorage.getItem('learnGround_assignments');
+      if (savedData) return JSON.parse(savedData) as Assignment[];
+      
       const data = await fetchAssignments();
-      setAssignments(data);
-      setIsLoading(false);
-    };
-    loadData();
-  }, []);
+      localStorage.setItem('learnGround_assignments', JSON.stringify(data));
+      return data;
+    }
+  });
 
-  const moveAssignment = (id: number, newStatus: Assignment['status']) => {
-    setAssignments(prev => 
-      prev.map(task => 
+  const moveMutation = useMutation({
+    mutationFn: async ({ id, newStatus }: { id: number, newStatus: Assignment['status'] }) => {
+      const updatedAssignments = assignments.map(task => 
         task.id === id ? { ...task, status: newStatus } : task
-      )
-    );
-  };
+      );
+      localStorage.setItem('learnGround_assignments', JSON.stringify(updatedAssignments));
+      return updatedAssignments;
+    },
+    onSuccess: (newAssignments) => {
+      queryClient.setQueryData(['assignments'], newAssignments);
+    }
+  });
 
   if (isLoading) {
     return (
@@ -78,8 +85,8 @@ export default function Assignments() {
                     <div className="flex gap-3 shrink-0">
                       {task.status === 'To Do' && (
                         <button 
-                          onClick={() => moveAssignment(task.id, 'In Progress')} 
-                          className="text-xs font-bold text-blue-600 hover:text-blue-800 transition-colors"
+                          onClick={() => moveMutation.mutate({ id: task.id, newStatus: 'In Progress' })} 
+                          className="text-xs font-bold text-blue-600 hover:text-blue-800 transition-colors whitespace-nowrap"
                         >
                           Start &rarr;
                         </button>
@@ -88,14 +95,14 @@ export default function Assignments() {
                       {task.status === 'In Progress' && (
                         <>
                           <button 
-                            onClick={() => moveAssignment(task.id, 'To Do')} 
-                            className="text-xs font-bold text-gray-400 hover:text-gray-600 transition-colors"
+                            onClick={() => moveMutation.mutate({ id: task.id, newStatus: 'To Do' })} 
+                            className="text-xs font-bold text-gray-400 hover:text-gray-600 transition-colors whitespace-nowrap"
                           >
                             &larr; Back
                           </button>
                           <button 
-                            onClick={() => moveAssignment(task.id, 'Completed')} 
-                            className="text-xs font-bold text-green-600 hover:text-green-800 transition-colors"
+                            onClick={() => moveMutation.mutate({ id: task.id, newStatus: 'Completed' })} 
+                            className="text-xs font-bold text-green-600 hover:text-green-800 transition-colors whitespace-nowrap"
                           >
                             Finish &rarr;
                           </button>
@@ -104,8 +111,8 @@ export default function Assignments() {
 
                       {task.status === 'Completed' && (
                         <button 
-                          onClick={() => moveAssignment(task.id, 'In Progress')} 
-                          className="text-xs font-bold text-gray-400 hover:text-gray-600 transition-colors"
+                          onClick={() => moveMutation.mutate({ id: task.id, newStatus: 'In Progress' })} 
+                          className="text-xs font-bold text-gray-400 hover:text-gray-600 transition-colors whitespace-nowrap"
                         >
                           &larr; Reopen
                         </button>
