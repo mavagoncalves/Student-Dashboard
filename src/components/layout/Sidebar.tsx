@@ -1,8 +1,9 @@
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { LayoutDashboard, BookOpen, FileCheck, LogOut } from 'lucide-react';
 
 export default function Sidebar() {
   const location = useLocation();
+  const navigate = useNavigate();
 
   const navItems = [
     { name: 'Dashboard', path: '/dashboard', icon: LayoutDashboard },
@@ -63,14 +64,17 @@ export default function Sidebar() {
 
       {/* SIGN OUT BUTTON */}
       <div className="ml-2 md:ml-0 md:mt-auto md:border-t md:border-gray-200 md:pt-6 flex-shrink-0">
-        <Link
-          to="/"
+        <button
+          onClick={() => {
+            localStorage.removeItem('learnGround_auth');
+            navigate('/', { replace: true });
+          }}
           title="Sign Out"
-          className="flex items-center justify-center md:justify-start gap-0 md:gap-3.5 p-2.5 md:px-4 md:py-3 rounded-xl md:rounded-2xl text-lg font-semibold text-gray-800 hover:bg-red-100 hover:text-red-700 transition-colors shrink-0"
+          className="w-full flex items-center justify-center md:justify-start gap-0 md:gap-3.5 p-2.5 md:px-4 md:py-3 rounded-xl md:rounded-2xl text-lg font-semibold text-gray-800 hover:bg-red-100 hover:text-red-700 transition-colors shrink-0"
         >
           <LogOut size={24} />
           <span className="hidden md:inline-block">Sign Out</span>
-        </Link>
+        </button>
       </div>
       
     </aside>
