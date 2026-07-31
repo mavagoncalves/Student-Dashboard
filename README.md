@@ -20,8 +20,6 @@
   <br />
 </div>
 
-LearnGround is a playful, responsive student portal web application built with React, TypeScript, and Vite. It provides students with a centralized dashboard to manage their academic courses, track assignments, and view real-time progress.
-
 ## Decisions
 * **Client-Side Authentication:** Leveraged `localStorage` to simulate session persistence (`learnGround_auth`) and dynamic username injection (`learnGround_userName`) without requiring a backend server.
 * **Component Architecture ("Div Soup" Refactoring):** Extracted heavy UI elements into modular sub-components (such as `CourseCard`) to keep markup clean, maintainable, and readable.
