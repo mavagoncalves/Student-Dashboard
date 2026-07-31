@@ -1,75 +1,58 @@
-# React + TypeScript + Vite
+<div align="center">
+  <br />
+  <img src="/src/assts/Logo.png" width="80" height="80" style="border-radius: 24px;" alt="LearnGround logo" />
+  
+  <h1 style="font-size: 3rem; font-weight: 900; margin-top: 16px; background: linear-gradient(to right, rgba(200, 214, 217, 1), #589fecff); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
+    LearnGround
+  </h1>
+  
+  <p style="font-size: 1.2rem; color: #4b5563; max-width: 600px; margin: 8px auto 24px auto; line-height: 1.6;">
+    LearnGround is a playful, responsive student portal web application built with React, TypeScript, and Vite. It provides students with a centralized dashboard to manage their academic courses, track assignments, and view real-time progress.
+  </p>
+  
+  <p>
+  <img src="https://img.shields.io/badge/react-%2320232a.svg?style=flat-round&logo=react&logoColor=%2361DAFB" alt="React" />
+  <img src="https://img.shields.io/badge/tailwindcss-%2338B2AC.svg?style=flat-round&logo=tailwind-css&logoColor=white" alt="TailwindCSS" />
+  <img src="https://img.shields.io/badge/Vite-646CFF?style=flat-round&logo=vite&logoColor=white" alt="Vite" />
+  <img src="https://img.shields.io/badge/Vercel-000000?style=flat-round&logo=vercel&logoColor=white" alt="Vercel" />
+</p>
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+  <br />
+</div>
 
-Currently, two official plugins are available:
+LearnGround is a playful, responsive student portal web application built with React, TypeScript, and Vite. It provides students with a centralized dashboard to manage their academic courses, track assignments, and view real-time progress.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Decisions
+* **Client-Side Authentication:** Leveraged `localStorage` to simulate session persistence (`learnGround_auth`) and dynamic username injection (`learnGround_userName`) without requiring a backend server.
+* **Component Architecture ("Div Soup" Refactoring):** Extracted heavy UI elements into modular sub-components (such as `CourseCard`) to keep markup clean, maintainable, and readable.
+* **Declarative Route Guards:** Implemented custom React Router protection to secure private views and automatically redirect users based on authentication status.
+* **Form Validation:** Integrated React Hook Form combined with Zod schemas to guarantee strict input validation with immediate, animated error states.
 
-## React Compiler
+## Assumptions
+* **No Backend Infrastructure:** Assumed a mock frontend environment where local data structures and `localStorage` suffice for demonstration and portfolio presentation.
+* **Modern Viewports:** Assumed evergreen browsers supporting modern CSS Grid, Flexbox layouts, and SVG rendering (Lucide icons).
+* **Unified Student Profile:** Assumed a generalized user workflow where personal details (like display names) are derived or saved dynamically from mock login entries.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Improvements
+* **Responsive Layout Enhancements:** Fixed mobile-view bottlenecks by introducing mobile-first flexbox stacking (like responsive footers, side-by-side header layouts).
+* **Dashboard Widgets:** Added a dedicated assignment tracker widget to surface tasks due within the week filtered by completion status.
+* **Accessibility Polish:** Added native `autoComplete` tags to form inputs to clear browser console warnings and integrate seamlessly with password managers.
 
-## Expanding the ESLint configuration
+## Tech Stack
+* **Core:** React, TypeScript, Vite
+* **Routing:** React Router DOM
+* **State Management & Data Fetching:** TanStack React Query
+* **Form Validation:** React Hook Form, Zod
+* **Styling:** Tailwind CSS, Lucide React Icons
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## Getting Started
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-
-```
-
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
-
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-
-```
+1. Clone the repository.
+2. Install dependencies:
+   ```bash
+   npm install
+   ```
+3. Run the development server:
+  ```bash
+   npm run dev
+   ```
