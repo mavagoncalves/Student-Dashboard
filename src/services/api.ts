@@ -1,3 +1,4 @@
+import type { ReactNode } from "react";
 
 // SHARED BLUEPRINTS & DATA
 export interface CourseDetail {
@@ -92,6 +93,7 @@ export const fetchCoursesList = async (): Promise<CourseDetail[]> => {
 
 // ASSIGNMENTS PAGE DATA
 export interface Assignment {
+  [x: string]: ReactNode;
   id: number;
   title: string;
   status: 'To Do' | 'In Progress' | 'Completed';

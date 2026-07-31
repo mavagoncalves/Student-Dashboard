@@ -97,9 +97,6 @@ export default function Courses() {
     <div className="space-y-8">
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <h1 className="text-2xl md:text-4xl font-extrabold text-gray-900">All Courses</h1>
-        <button className="bg-[#D6DBDF] px-6 py-3 rounded-xl font-bold text-gray-800 hover:bg-gray-400 transition-colors w-full sm:w-auto">
-          NEW COURSE
-        </button>
       </div>
       
       {/*Grid setup: 2 columns on mobile, 3 on tablet, 4 on desktop. When a card expands, it takes up 2 columns.*/}

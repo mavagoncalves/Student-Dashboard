@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { BookOpen, Monitor, Database, Cpu, Layout, Globe, Briefcase, PenTool, LineChart, Microscope } from 'lucide-react';
-import { fetchDashboardData, type DashboardData } from '../../services/api';
+import { fetchDashboardData, type DashboardData, type Assignment } from '../../services/api';
 import Statistics from '../../components/ui/StatsCard';
 
 const IconMap: Record<string, any> = {
@@ -11,6 +11,7 @@ const IconMap: Record<string, any> = {
 export default function Dashboard() {
   const [data, setData] = useState<DashboardData | null>(null);
   const [isLoading, setIsLoading] = useState(true);
+  const userName = localStorage.getItem('learnGround_userName') || 'Student';
 
   useEffect(() => {
     const loadData = async () => {
@@ -40,7 +41,7 @@ export default function Dashboard() {
       {/* PAGE HEADER */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <h1 className="text-2xl md:text-4xl font-extrabold text-gray-900">
-          Welcome back, Maria!
+          Welcome back, {userName}!
         </h1>
       </div>
 
@@ -69,6 +70,62 @@ export default function Dashboard() {
 
       {/* STATS COMPONENT */}
       <Statistics attendanceRate={data.stats.attendanceRate} gpa={data.stats.gpa} />
+
+      {/* ASSIGNMENTS DUE THIS WEEK WIDGET */}
+        <div className="bg-white rounded-3xl p-6 shadow-sm border border-gray-100">
+          <div className="flex items-center justify-between mb-4">
+            <h3 className="text-lg font-extrabold text-gray-900">Assignments Due This Week</h3>
+            <span className="text-xs font-bold bg-blue-50 text-blue-700 px-2.5 py-1 rounded-full">
+              To Do & In Progress
+            </span>
+          </div>
+
+          {(() => {
+            // Pull assignments from localStorage (fallback to empty array if none exist yet)
+            const savedData = localStorage.getItem('learnGround_assignments');
+            const assignments: Assignment[] = savedData ? JSON.parse(savedData) : [];
+            
+            // Filter for tasks that are NOT completed
+            const pendingAssignments = assignments.filter(
+              (task) => task.status === 'To Do' || task.status === 'In Progress'
+            );
+
+            if (pendingAssignments.length === 0) {
+              return (
+                <p className="text-sm font-medium text-gray-400 py-4 text-center">
+                  All caught up! No pending assignments.
+                </p>
+              );
+            }
+
+            return (
+              <div className="space-y-3">
+                {pendingAssignments.map((task) => (
+                  <div 
+                    key={task.id}
+                    className="flex items-center justify-between p-4 rounded-2xl bg-gray-50/60 border border-gray-100 transition-all hover:bg-gray-50"
+                  >
+                    <div className="space-y-1 min-w-0 pr-4">
+                      <h4 className="font-bold text-gray-800 text-sm truncate">{task.title}</h4>
+                      <p className="text-xs font-medium text-gray-400 truncate">{task.course}</p>
+                    </div>
+
+                    <div className="flex items-center gap-3 shrink-0">
+                      <span className="text-xs font-bold text-gray-500 bg-white px-3 py-1.5 rounded-xl border border-gray-100 shadow-xs">
+                        {task.dueDate}
+                      </span>
+                      <span className={`px-2.5 py-1 rounded-xl text-[10px] font-extrabold uppercase tracking-wide ${
+                        task.status === 'In Progress' ? 'bg-blue-100 text-blue-700' : 'bg-gray-200 text-gray-700'
+                      }`}>
+                        {task.status}
+                      </span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            );
+          })()}
+        </div>
     </div>
   );
 }
