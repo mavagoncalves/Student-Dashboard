@@ -42,9 +42,6 @@ export default function Dashboard() {
         <h1 className="text-2xl md:text-4xl font-extrabold text-gray-900">
           Welcome back, Maria!
         </h1>
-        <button className="bg-[#D6DBDF] px-6 py-3 rounded-xl font-bold text-gray-800 hover:bg-gray-400 transition-colors w-full sm:w-auto">
-          NEW COURSE
-        </button>
       </div>
 
       {/* COURSES*/}
