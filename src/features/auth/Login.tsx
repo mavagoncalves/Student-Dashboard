@@ -69,6 +69,7 @@ export default function Login() {
               <input
                 id="email"
                 type="email"
+                autoComplete="email"
                 placeholder="student@university.edu"
                 className={`block w-full rounded-2xl border-2 p-4 outline-none font-medium transition-all ${
                   errors.email 
@@ -94,6 +95,7 @@ export default function Login() {
               <input
                 id="password"
                 type="password"
+                autoComplete="current-password"
                 placeholder="••••••••"
                 className={`block w-full rounded-2xl border-2 p-4 outline-none font-medium transition-all ${
                   errors.password 
@@ -111,7 +113,7 @@ export default function Login() {
               )}
             </div>
           </div>
-
+          
           {/* SUBMIT BUTTON + LOADING STATE */}
           <button
             type="submit"
